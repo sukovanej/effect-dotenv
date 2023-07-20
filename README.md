@@ -16,9 +16,10 @@ in the standard behaviour where environment variable is used if set,
 otherwise it attempts to load it from the .env file.
 
 The input parameters can be
-- *ommited completely* - `.env` file is used by default
-- *a string* - it will attempt to load a file on the given path
-- *list of strings* - it will use the first existing .env file from the list
+
+- _ommited completely_ - `.env` file is used by default
+- _a string_ - it will attempt to load a file on the given path
+- _list of strings_ - it will use the first existing .env file from the list
 
 ```ts
 import { setDotEnvConfigProvider } from "effect-dotenv";
@@ -35,7 +36,6 @@ const program = pipe(
   Effect.config(exampleConfig),
   Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
   Effect.provideSomeLayer(setDotEnvConfigProvider()),
-  Effect.scoped,
 );
 
 Effect.runPromise(program);
@@ -69,7 +69,6 @@ const program = pipe(
       Layer.unwrapEffect,
     ),
   ),
-  Effect.scoped,
 );
 
 Effect.runPromise(program);

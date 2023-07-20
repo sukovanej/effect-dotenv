@@ -19,7 +19,6 @@ const program = pipe(
       Layer.unwrapEffect,
     ),
   ),
-  Effect.scoped,
 );
 
 Effect.runPromise(program);

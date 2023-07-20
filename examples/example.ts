@@ -12,7 +12,6 @@ const program = pipe(
   Effect.config(exampleConfig),
   Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
   Effect.provideSomeLayer(setDotEnvConfigProvider()),
-  Effect.scoped,
 );
 
 Effect.runPromise(program);
