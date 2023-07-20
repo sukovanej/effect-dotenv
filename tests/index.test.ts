@@ -1,8 +1,13 @@
-import { setDotEnvConfigProvider } from "effect-dotenv";
+import {
+  NoAvailableDotEnvFileError,
+  dotEnvConfigProvider,
+  setDotEnvConfigProvider,
+} from "effect-dotenv";
 
 import { pipe } from "@effect/data/Function";
 import * as Config from "@effect/io/Config";
 import * as Effect from "@effect/io/Effect";
+import * as Layer from "@effect/io/Layer";
 
 import { modifyEnv, withTmpDotEnvFile } from "./utils";
 
@@ -66,4 +71,31 @@ test("Process env has precedence over dotenv", async () => {
   const result = await Effect.runPromise(program);
 
   expect(result).toEqual({ value: "hello", number: 69 });
+});
+
+test("Dotnet config provider fails if no .env file is found", async () => {
+  const program = pipe(
+    Effect.config(exampleConfig),
+    Effect.provideSomeLayer(
+      pipe(
+        dotEnvConfigProvider(".non-existing-env-file"),
+        Effect.map(Effect.setConfigProvider),
+        Layer.unwrapEffect,
+      ),
+    ),
+  );
+
+  const result = await Effect.runPromiseExit(program);
+  const expectedResult = Effect.runPromiseExit(
+    Effect.fail(
+      new NoAvailableDotEnvFileError({
+        files: [".non-existing-env-file"],
+        error: new Error(
+          "ENOENT: no such file or directory, open '.non-existing-env-file'",
+        ),
+      }),
+    ),
+  );
+
+  expect(result).toMatchObject(expectedResult);
 });

@@ -3,6 +3,7 @@ import fs from "fs";
 import { promisify } from "util";
 
 import * as Context from "@effect/data/Context";
+import * as Data from "@effect/data/Data";
 import { pipe } from "@effect/data/Function";
 import * as RA from "@effect/data/ReadonlyArray";
 import * as ConfigProvider from "@effect/io/Config/Provider";
@@ -12,18 +13,12 @@ import * as FiberRef from "@effect/io/FiberRef";
 import * as Layer from "@effect/io/Layer";
 
 /**
- * @category models
+ * @category errors
  * @since 1.0.0
  */
-export type EnvFileError = {
-  _tag: "EnvFileError";
-  message: string;
-  error: unknown;
-};
-
-/** @internal */
-export const envFileError = (message: string, error: unknown): EnvFileError =>
-  ({ _tag: "EnvFileError", message, error }) as const;
+export class NoAvailableDotEnvFileError extends Data.TaggedClass(
+  "NoAvailableDotEnvFileError",
+)<{ files: readonly string[]; error: unknown }> {}
 
 /** @internal */
 const currentConfigProvider = pipe(
@@ -36,31 +31,35 @@ const currentConfigProvider = pipe(
 /**
  * Create a dotenv config provider.
  *
+ * The input argument can be either a path to the .env file,
+ * list of .env files where order determine the preference, or
+ * it can be ommited in which case the default `.env` is used.
+ *
  * @category constructors
  * @since 1.0.0
  */
-export const dotEnvConfigProvider = (paths: string | readonly string[]) =>
-  pipe(
-    Effect.firstSuccessOf(
-      pipe(
-        typeof paths === "string" ? [paths] : paths,
-        RA.map((path) =>
-          Effect.all([
-            Effect.tryPromise(() => promisify(fs.readFile)(path)),
-            Effect.succeed(path),
-          ]),
-        ),
-      ),
+export const dotEnvConfigProvider = (paths?: string | readonly string[]) => {
+  const files =
+    typeof paths === "string"
+      ? [paths]
+      : paths === undefined
+      ? [".env"]
+      : paths;
+
+  return pipe(
+    RA.map(files, (path) =>
+      Effect.all([
+        Effect.tryPromise(() => promisify(fs.readFile)(path)),
+        Effect.succeed(path),
+      ]),
     ),
-    Effect.mapError((error) =>
-      envFileError(`No dotenv file found, tried "${paths}"`, error),
+    Effect.firstSuccessOf,
+    Effect.mapError(
+      (error) => new NoAvailableDotEnvFileError({ files, error }),
     ),
     Effect.flatMap(([buffer, path]) =>
       pipe(
-        Effect.try(() => dotenv.parse(buffer.toString("utf8"))),
-        Effect.mapError((error) =>
-          envFileError(`Failed to parse ${path}`, error),
-        ),
+        Effect.sync(() => dotenv.parse(buffer.toString("utf8"))),
         Effect.map((env) => [env, path] as const),
       ),
     ),
@@ -68,9 +67,15 @@ export const dotEnvConfigProvider = (paths: string | readonly string[]) =>
       ConfigProvider.fromMap(new Map(Object.entries(object))),
     ),
   );
+};
 
 /**
- * Create a layer that sets the ConfigProvider to dotenv provider.
+ * Create a layer that sets the ConfigProvider to dotenv config provider
+ * as a fallback to the current ConfigProvider.
+ *
+ * The input argument can be either a path to the .env file,
+ * list of .env files where order determine the preference, or
+ * it can be ommited in which case the default `.env` is used.
  *
  * The current config provider (process env by default) takes
  * precendence over the dotenv provider.
@@ -78,7 +83,7 @@ export const dotEnvConfigProvider = (paths: string | readonly string[]) =>
  * @category constructors
  * @since 1.0.0
  */
-export const setDotEnvConfigProvider = (paths: string | readonly string[]) =>
+export const setDotEnvConfigProvider = (paths?: string | readonly string[]) =>
   pipe(
     dotEnvConfigProvider(paths),
     Effect.flatMap((dotEnvConfigProvider) =>
@@ -87,7 +92,7 @@ export const setDotEnvConfigProvider = (paths: string | readonly string[]) =>
         Effect.map(ConfigProvider.orElse(() => dotEnvConfigProvider)),
       ),
     ),
-    Effect.catchAll(() => currentConfigProvider),
+    Effect.catchTag("NoAvailableDotEnvFileError", () => currentConfigProvider),
     Effect.map(Effect.setConfigProvider),
     Layer.unwrapEffect,
   );
