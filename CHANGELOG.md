@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.0.4
+
+### Patch Changes
+
+- f4f88e1: Update /data and /io.
+
 ## 0.0.3
 
 ### Patch Changes
