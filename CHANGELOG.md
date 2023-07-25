@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.0.5
+
+### Patch Changes
+
+- 74a99da: Update /data.
+
 ## 0.0.4
 
 ### Patch Changes
