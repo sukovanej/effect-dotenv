@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.0.6
+
+### Patch Changes
+
+- 4dad041: Update /data.
+
 ## 0.0.5
 
 ### Patch Changes
