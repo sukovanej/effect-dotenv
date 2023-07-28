@@ -1,5 +1,12 @@
 # effect-dotenv
 
+## 0.0.7
+
+### Patch Changes
+
+- 9dd2b54: Update /io.
+- 3f6712e: Update /io.
+
 ## 0.0.6
 
 ### Patch Changes
