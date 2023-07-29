@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.1.0
+
+### Minor Changes
+
+- e1f224e: Update /io and /data.
+
 ## 0.0.7
 
 ### Patch Changes
