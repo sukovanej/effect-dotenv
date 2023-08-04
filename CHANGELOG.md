@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.3.0
+
+### Minor Changes
+
+- e9f2f8e: Update /io.
+
 ## 0.2.0
 
 ### Minor Changes
