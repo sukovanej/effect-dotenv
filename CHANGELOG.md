@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.4.1
+
+### Patch Changes
+
+- 0a4eb1c: Set type to `module`.
+
 ## 0.4.0
 
 ### Minor Changes
