@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.4.0
+
+### Minor Changes
+
+- 47b71d1: Publish dist directory. Use /data and /io as peer dependencies.
+
 ## 0.3.0
 
 ### Minor Changes
