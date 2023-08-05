@@ -3,27 +3,31 @@
   "version": "0.3.0",
   "description": "dotenv effect wrapper",
   "homepage": "https://sukovanej.github.io/effect-dotenv",
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
+  "types": "./index.d.ts",
+  "main": "./index.js",
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
+  },
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "require": "./index.cjs",
+      "import": "./index.js",
+      "types": "./index.d.ts"
     },
     "./*": {
       "import": {
-        "types": "./dist/*.d.ts",
-        "default": "./dist/*.mjs"
+        "types": "./*.d.ts",
+        "default": "./*.js"
       },
       "require": {
-        "types": "./dist/*.d.ts",
-        "default": "./dist/*.js"
+        "types": "./*.d.cts",
+        "default": "./*.cjs"
       }
     }
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && cp package.json dist/ && cp README.md dist/",
     "watch": "tsc -w -p tsconfig.json",
     "format": "prettier -w src tests examples",
     "format:check": "pnpm format --check",
@@ -40,8 +44,10 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
+    "@effect/data": "^0.17.1",
+    "@effect/io": "^0.38.0",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
-    "@types/node": "^20.4.7",
+    "@types/node": "^20.4.8",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
     "@vitest/coverage-c8": "^0.33.0",
@@ -53,8 +59,10 @@
     "vitest": "^0.34.1"
   },
   "dependencies": {
-    "@effect/data": "^0.17.1",
-    "@effect/io": "^0.38.0",
     "dotenv": "^16.3.1"
+  },
+  "peerDependencies": {
+    "@effect/data": "^0.17.1",
+    "@effect/io": "^0.38.0"
   }
 }
