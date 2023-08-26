@@ -22,11 +22,8 @@ The input parameters can be
 - _list of strings_ - it will use the first existing .env file from the list
 
 ```ts
+import { Config, Effect, pipe } from "effect";
 import { setDotEnvConfigProvider } from "effect-dotenv";
-
-import { pipe } from "@effect/data/Function";
-import * as Config from "@effect/io/Config";
-import * as Effect from "@effect/io/Effect";
 
 const exampleConfig = Config.all({
   value: Config.string("VALUE"),
@@ -48,12 +45,8 @@ from `.env` file. The `program` effect will fail with `NoAvailableDotEnvFileErro
 error if the `.env` file doesn't exist.
 
 ```ts
+import { Config, Effect, Layer, pipe } from "effect";
 import { dotEnvConfigProvider } from "effect-dotenv";
-
-import { pipe } from "@effect/data/Function";
-import * as Config from "@effect/io/Config";
-import * as Effect from "@effect/io/Effect";
-import * as Layer from "@effect/io/Layer";
 
 const exampleConfig = Config.all({
   value: Config.string("VALUE"),
@@ -64,7 +57,7 @@ const program = pipe(
   Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
   Effect.provideSomeLayer(
     pipe(
-      dotEnvConfigProvider(),
+      dotEnvConfigProvider(".env"),
       Effect.map(Effect.setConfigProvider),
       Layer.unwrapEffect,
     ),

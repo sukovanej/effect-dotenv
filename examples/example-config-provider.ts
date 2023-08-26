@@ -1,9 +1,5 @@
+import { Config, Effect, Layer, pipe } from "effect";
 import { dotEnvConfigProvider } from "effect-dotenv";
-
-import { pipe } from "@effect/data/Function";
-import * as Config from "@effect/io/Config";
-import * as Effect from "@effect/io/Effect";
-import * as Layer from "@effect/io/Layer";
 
 const exampleConfig = Config.all({
   value: Config.string("VALUE"),
