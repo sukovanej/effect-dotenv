@@ -6,7 +6,7 @@ import * as Context from "@effect/data/Context";
 import * as Data from "@effect/data/Data";
 import { pipe } from "@effect/data/Function";
 import * as RA from "@effect/data/ReadonlyArray";
-import * as ConfigProvider from "@effect/io/Config/Provider";
+import * as ConfigProvider from "@effect/io/ConfigProvider";
 import * as DefaultServices from "@effect/io/DefaultServices";
 import * as Effect from "@effect/io/Effect";
 import * as FiberRef from "@effect/io/FiberRef";
