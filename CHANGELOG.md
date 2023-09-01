@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.5.0
+
+### Minor Changes
+
+- b987797: Update effect packages.
+
 ## 0.4.1
 
 ### Patch Changes
