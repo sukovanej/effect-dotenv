@@ -1,5 +1,15 @@
 # effect-dotenv
 
+## 0.6.0
+
+### Minor Changes
+
+- da3037b: Update effect dependencies.
+
+### Patch Changes
+
+- f6568ee: Update /data/ and /io.
+
 ## 0.5.0
 
 ### Minor Changes
