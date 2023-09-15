@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.6.1
+
+### Patch Changes
+
+- 623dcf0: Update /io.
+
 ## 0.6.0
 
 ### Minor Changes
