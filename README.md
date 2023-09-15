@@ -1,6 +1,6 @@
 # effect-dotenv
 
-[dotenv](https://github.com/motdotla/dotenv) [ConfigProvider](https://effect-ts.github.io/io/modules/Config/Provider.ts.html) implementation for [Effect-TS](https://github.com/Effect-TS)
+[dotenv](https://github.com/motdotla/dotenv) [ConfigProvider](https://effect-ts.github.io/io/modules/ConfigProvider.ts.html) implementation for [Effect-TS](https://github.com/Effect-TS)
 
 ```
 pnpm add effect-dotenv
