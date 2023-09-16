@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.8.0
+
+### Minor Changes
+
+- 42930d9: Update API.
+
 ## 0.7.0
 
 ### Minor Changes
