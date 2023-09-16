@@ -1,8 +1,4 @@
-import {
-  NoAvailableDotEnvFileError,
-  dotEnvConfigProvider,
-  setDotEnvConfigProvider,
-} from "effect-dotenv";
+import { DotEnv } from "effect-dotenv";
 
 import * as Either from "@effect/data/Either";
 import { pipe } from "@effect/data/Function";
@@ -20,7 +16,7 @@ const exampleConfig = Config.all({
 const readExampleConfig = (envFilePath: string) =>
   pipe(
     Effect.config(exampleConfig),
-    Effect.provideSomeLayer(setDotEnvConfigProvider(envFilePath)),
+    Effect.provideSomeLayer(DotEnv.setConfigProvider(envFilePath)),
   );
 
 test("Load from env file", async () => {
@@ -79,7 +75,7 @@ test("Dotnet config provider fails if no .env file is found", async () => {
     Effect.config(exampleConfig),
     Effect.provideSomeLayer(
       pipe(
-        dotEnvConfigProvider(".non-existing-env-file"),
+        DotEnv.makeConfigProvider(".non-existing-env-file"),
         Effect.map(Effect.setConfigProvider),
         Layer.unwrapEffect,
       ),
@@ -88,7 +84,7 @@ test("Dotnet config provider fails if no .env file is found", async () => {
 
   const result = await Effect.runPromise(Effect.either(program));
   const expectedResult = Either.left(
-    new NoAvailableDotEnvFileError({
+    new DotEnv.NoAvailableDotEnvFileError({
       files: [".non-existing-env-file"],
       error: new Error(
         "ENOENT: no such file or directory, open '.non-existing-env-file'",

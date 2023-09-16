@@ -16,7 +16,7 @@ import * as Layer from "@effect/io/Layer";
  * @category errors
  * @since 1.0.0
  */
-export class NoAvailableDotEnvFileError extends Data.TaggedClass(
+class NoAvailableDotEnvFileError extends Data.TaggedClass(
   "NoAvailableDotEnvFileError",
 )<{ files: readonly string[]; error: unknown }> {}
 
@@ -38,7 +38,7 @@ const currentConfigProvider = pipe(
  * @category constructors
  * @since 1.0.0
  */
-export const dotEnvConfigProvider = (paths?: string | readonly string[]) => {
+const makeConfigProvider = (paths?: string | readonly string[]) => {
   const files =
     typeof paths === "string"
       ? [paths]
@@ -83,9 +83,9 @@ export const dotEnvConfigProvider = (paths?: string | readonly string[]) => {
  * @category constructors
  * @since 1.0.0
  */
-export const setDotEnvConfigProvider = (paths?: string | readonly string[]) =>
+const setConfigProvider = (paths?: string | readonly string[]) =>
   pipe(
-    dotEnvConfigProvider(paths),
+    makeConfigProvider(paths),
     Effect.flatMap((dotEnvConfigProvider) =>
       pipe(
         currentConfigProvider,
@@ -96,3 +96,5 @@ export const setDotEnvConfigProvider = (paths?: string | readonly string[]) =>
     Effect.map(Effect.setConfigProvider),
     Layer.unwrapEffect,
   );
+
+export const DotEnv = { setConfigProvider, makeConfigProvider, NoAvailableDotEnvFileError };
