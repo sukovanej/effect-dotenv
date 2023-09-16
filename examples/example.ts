@@ -1,5 +1,5 @@
 import { Config, Effect, pipe } from "effect";
-import { DotEnv } from "effect-dotenv";
+import DotEnv from "effect-dotenv";
 
 const exampleConfig = Config.all({
   value: Config.string("VALUE"),
