@@ -6,7 +6,7 @@
 pnpm add effect-dotenv
 ```
 
-## Using `setDotEnvConfigProvider`
+## Using `setConfigProvider` layer
 
 `setDotEnvConfigProvider` creates a layer that will attempt to load
 the .env file. If the .env file doesn't exist, it will use the current
@@ -38,7 +38,7 @@ const program = pipe(
 Effect.runPromise(program);
 ```
 
-## Using `dotEnvConfigProvider`
+## Using `makeConfigProvider` effect
 
 The example below configures config provider that will read the config
 from `.env` file. The `program` effect will fail with `NoAvailableDotEnvFileError`
