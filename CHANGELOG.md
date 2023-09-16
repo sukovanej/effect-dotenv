@@ -1,5 +1,15 @@
 # effect-dotenv
 
+## 0.7.0
+
+### Minor Changes
+
+- a2eb720: Update API.
+
+### Patch Changes
+
+- eea1a0e: Update /io.
+
 ## 0.6.1
 
 ### Patch Changes
