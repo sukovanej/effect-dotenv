@@ -1,5 +1,5 @@
 import { Config, Effect, pipe } from "effect";
-import { setDotEnvConfigProvider } from "effect-dotenv";
+import { DotEnv } from "effect-dotenv";
 
 const exampleConfig = Config.all({
   value: Config.string("VALUE"),
@@ -8,7 +8,7 @@ const exampleConfig = Config.all({
 const program = pipe(
   Effect.config(exampleConfig),
   Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
-  Effect.provideSomeLayer(setDotEnvConfigProvider()),
+  Effect.provideSomeLayer(DotEnv.setConfigProvider()),
 );
 
 Effect.runPromise(program);
