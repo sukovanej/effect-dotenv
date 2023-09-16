@@ -97,8 +97,10 @@ const setConfigProvider = (paths?: string | readonly string[]) =>
     Layer.unwrapEffect,
   );
 
-export const DotEnv = {
+const DotEnv = {
   setConfigProvider,
   makeConfigProvider,
   NoAvailableDotEnvFileError,
 };
+
+export default DotEnv;

@@ -1,4 +1,4 @@
-import { DotEnv } from "effect-dotenv";
+import DotEnv from "effect-dotenv";
 
 import * as Either from "@effect/data/Either";
 import { pipe } from "@effect/data/Function";

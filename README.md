@@ -23,7 +23,7 @@ The input parameters can be
 
 ```ts
 import { Config, Effect, pipe } from "effect";
-import { DotEnv } from "effect-dotenv";
+import DotEnv from "effect-dotenv";
 
 const exampleConfig = Config.all({
   value: Config.string("VALUE"),
@@ -46,7 +46,7 @@ error if the `.env` file doesn't exist.
 
 ```ts
 import { Config, Effect, Layer, pipe } from "effect";
-import { DotEnv } from "effect-dotenv";
+import DotEnv from "effect-dotenv";
 
 const exampleConfig = Config.all({
   value: Config.string("VALUE"),
