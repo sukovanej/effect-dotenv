@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.9.0
+
+### Minor Changes
+
+- d0165e6: Update effect + `DotEnv` export.
+
 ## 0.8.0
 
 ### Minor Changes
