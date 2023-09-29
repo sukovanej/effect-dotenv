@@ -23,7 +23,7 @@ The input parameters can be
 
 ```ts
 import { Config, Effect, pipe } from "effect";
-import DotEnv from "effect-dotenv";
+import { DotEnv } from "effect-dotenv";
 
 const exampleConfig = Config.all({
   value: Config.string("VALUE"),
@@ -32,7 +32,7 @@ const exampleConfig = Config.all({
 const program = pipe(
   Effect.config(exampleConfig),
   Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
-  Effect.provideSomeLayer(DotEnv.setConfigProvider()),
+  Effect.provide(DotEnv.setConfigProvider()),
 );
 
 Effect.runPromise(program);
@@ -46,7 +46,7 @@ error if the `.env` file doesn't exist.
 
 ```ts
 import { Config, Effect, Layer, pipe } from "effect";
-import DotEnv from "effect-dotenv";
+import { DotEnv } from "effect-dotenv";
 
 const exampleConfig = Config.all({
   value: Config.string("VALUE"),
@@ -55,7 +55,7 @@ const exampleConfig = Config.all({
 const program = pipe(
   Effect.config(exampleConfig),
   Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
-  Effect.provideSomeLayer(
+  Effect.provide(
     pipe(
       DotEnv.makeConfigProvider(".env"),
       Effect.map(Effect.setConfigProvider),
