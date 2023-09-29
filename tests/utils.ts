@@ -1,9 +1,7 @@
+import { Effect, pipe } from "effect";
 import fs from "fs";
 import path from "path";
 import { promisify } from "util";
-
-import { pipe } from "@effect/data/Function";
-import * as Effect from "@effect/io/Effect";
 
 const withTmpDir = (prefix: string) =>
   Effect.acquireRelease(

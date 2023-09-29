@@ -1,16 +1,17 @@
 import * as dotenv from "dotenv";
+import {
+  ConfigProvider,
+  Context,
+  Data,
+  DefaultServices,
+  Effect,
+  FiberRef,
+  Layer,
+  ReadonlyArray,
+  pipe,
+} from "effect";
 import fs from "fs";
 import { promisify } from "util";
-
-import * as Context from "@effect/data/Context";
-import * as Data from "@effect/data/Data";
-import { pipe } from "@effect/data/Function";
-import * as RA from "@effect/data/ReadonlyArray";
-import * as ConfigProvider from "@effect/io/ConfigProvider";
-import * as DefaultServices from "@effect/io/DefaultServices";
-import * as Effect from "@effect/io/Effect";
-import * as FiberRef from "@effect/io/FiberRef";
-import * as Layer from "@effect/io/Layer";
 
 /**
  * @category errors
@@ -47,7 +48,7 @@ const makeConfigProvider = (paths?: string | readonly string[]) => {
       : paths;
 
   return pipe(
-    RA.map(files, (path) =>
+    ReadonlyArray.map(files, (path) =>
       Effect.all([
         Effect.tryPromise(() => promisify(fs.readFile)(path)),
         Effect.succeed(path),
@@ -97,10 +98,8 @@ const setConfigProvider = (paths?: string | readonly string[]) =>
     Layer.unwrapEffect,
   );
 
-const DotEnv = {
+export const DotEnv = {
   setConfigProvider,
   makeConfigProvider,
   NoAvailableDotEnvFileError,
 };
-
-export default DotEnv;

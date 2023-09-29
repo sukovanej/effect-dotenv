@@ -1,10 +1,5 @@
-import DotEnv from "effect-dotenv";
-
-import * as Either from "@effect/data/Either";
-import { pipe } from "@effect/data/Function";
-import * as Config from "@effect/io/Config";
-import * as Effect from "@effect/io/Effect";
-import * as Layer from "@effect/io/Layer";
+import { Config, Effect, Either, Layer, pipe } from "effect";
+import { DotEnv } from "effect-dotenv";
 
 import { modifyEnv, withTmpDotEnvFile } from "./utils";
 
@@ -16,7 +11,7 @@ const exampleConfig = Config.all({
 const readExampleConfig = (envFilePath: string) =>
   pipe(
     Effect.config(exampleConfig),
-    Effect.provideSomeLayer(DotEnv.setConfigProvider(envFilePath)),
+    Effect.provide(DotEnv.setConfigProvider(envFilePath)),
   );
 
 test("Load from env file", async () => {
@@ -73,7 +68,7 @@ test("Process env has precedence over dotenv", async () => {
 test("Dotnet config provider fails if no .env file is found", async () => {
   const program = pipe(
     Effect.config(exampleConfig),
-    Effect.provideSomeLayer(
+    Effect.provide(
       pipe(
         DotEnv.makeConfigProvider(".non-existing-env-file"),
         Effect.map(Effect.setConfigProvider),
