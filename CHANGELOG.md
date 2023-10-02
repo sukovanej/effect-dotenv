@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.9.1
+
+### Patch Changes
+
+- 0ca12ad: Update effect.
+
 ## 0.9.0
 
 ### Minor Changes
