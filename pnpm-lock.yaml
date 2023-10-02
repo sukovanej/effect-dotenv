@@ -29,8 +29,8 @@ devDependencies:
     specifier: ^0.34.6
     version: 0.34.6(vitest@0.34.6)
   effect:
-    specifier: 2.0.0-next.39
-    version: 2.0.0-next.39
+    specifier: 2.0.0-next.40
+    version: 2.0.0-next.40
   eslint:
     specifier: ^8.50.0
     version: 8.50.0
@@ -262,7 +262,7 @@ packages:
       semver: 7.5.4
       spawndamnit: 2.0.0
       term-size: 2.2.1
-      tty-table: 4.2.1
+      tty-table: 4.2.2
     dev: true
 
   /@changesets/config@2.3.1:
@@ -1424,8 +1424,8 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /effect@2.0.0-next.39:
-    resolution: {integrity: sha512-4i6OI4pI55MeDALupg8wOX3Y6nvdwqJcJRGjwYNK7xqAGK3QXy6jbxAi4jf1FBVkIChtJLn2pQ42CbcrjNjewA==}
+  /effect@2.0.0-next.40:
+    resolution: {integrity: sha512-UIUCOHZHFbubTXEYNGHeC4JeW44DjrOauik1ZCuaMpwZoQiDtyyY781nrxKqxPvmLiT458xbeWol/7PWuREzlw==}
     dev: true
 
   /emoji-regex@8.0.0:
@@ -3376,8 +3376,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /tty-table@4.2.1:
-    resolution: {integrity: sha512-xz0uKo+KakCQ+Dxj1D/tKn2FSyreSYWzdkL/BYhgN6oMW808g8QRMuh1atAV9fjTPbWBjfbkKQpI/5rEcnAc7g==}
+  /tty-table@4.2.2:
+    resolution: {integrity: sha512-2gvCArMZLxgvpZ2NvQKdnYWIFLe7I/z5JClMuhrDXunmKgSZcQKcZRjN9XjAFiToMz2pUo1dEIXyrm0AwgV5Tw==}
     engines: {node: '>=8.0.0'}
     hasBin: true
     dependencies:
