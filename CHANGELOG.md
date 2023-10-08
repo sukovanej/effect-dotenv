@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.9.6
+
+### Patch Changes
+
+- f8020b6: Update effect.
+
 ## 0.9.5
 
 ### Patch Changes
