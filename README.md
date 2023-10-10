@@ -58,7 +58,7 @@ const program = pipe(
   Effect.provide(
     pipe(
       DotEnv.makeConfigProvider(".env"),
-      Effect.map(Effect.setConfigProvider),
+      Effect.map(Layer.setConfigProvider),
       Layer.unwrapEffect,
     ),
   ),

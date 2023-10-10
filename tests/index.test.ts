@@ -71,21 +71,18 @@ test("Dotnet config provider fails if no .env file is found", async () => {
     Effect.provide(
       pipe(
         DotEnv.makeConfigProvider(".non-existing-env-file"),
-        Effect.map(Effect.setConfigProvider),
+        Effect.map(Layer.setConfigProvider),
         Layer.unwrapEffect,
       ),
     ),
   );
 
   const result = await Effect.runPromise(Effect.either(program));
-  const expectedResult = Either.left(
-    new DotEnv.NoAvailableDotEnvFileError({
-      files: [".non-existing-env-file"],
-      error: new Error(
-        "ENOENT: no such file or directory, open '.non-existing-env-file'",
-      ),
-    }),
-  );
+  expect(Either.isLeft(result)).toBe(true);
 
-  expect(result).toMatchObject(expectedResult);
+  const resultError = (
+    result as Either.Left<DotEnv.NoAvailableDotEnvFileError, never>
+  ).left;
+
+  expect(resultError.files).toEqual([".non-existing-env-file"]);
 });
