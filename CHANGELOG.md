@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.10.0
+
+### Minor Changes
+
+- 2228e2a: Update effect.
+
 ## 0.9.6
 
 ### Patch Changes
