@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.11.0
+
+### Minor Changes
+
+- aec0f63: Update effect.
+
 ## 0.10.0
 
 ### Minor Changes
