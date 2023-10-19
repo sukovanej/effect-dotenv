@@ -1,7 +1,7 @@
 {
   "name": "effect-dotenv",
   "type": "module",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "dotenv effect wrapper",
   "homepage": "https://sukovanej.github.io/effect-dotenv",
   "types": "./index.d.ts",
