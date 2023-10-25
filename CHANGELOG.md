@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.13.0
+
+### Minor Changes
+
+- c956399: Update effect.
+
 ## 0.12.0
 
 ### Minor Changes
