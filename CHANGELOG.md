@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.13.1
+
+### Patch Changes
+
+- af25eea: Update effect.
+
 ## 0.13.0
 
 ### Minor Changes
