@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.13.2
+
+### Patch Changes
+
+- c1255b1: Update effect.
+
 ## 0.13.1
 
 ### Patch Changes
