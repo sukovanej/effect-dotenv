@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.13.3
+
+### Patch Changes
+
+- dd33274: Update dependencies.
+
 ## 0.13.2
 
 ### Patch Changes
