@@ -44,8 +44,8 @@ export const makeConfigProvider = (paths?: string | readonly string[]) => {
     typeof paths === "string"
       ? [paths]
       : paths === undefined
-      ? [".env"]
-      : paths;
+        ? [".env"]
+        : paths;
 
   return pipe(
     ReadonlyArray.map(files, (path) =>
