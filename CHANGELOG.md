@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.14.0
+
+### Minor Changes
+
+- 6cc8cac: Update effect.
+
 ## 0.13.4
 
 ### Patch Changes
