@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.14.2
+
+### Patch Changes
+
+- 7c124f4: Update effect.
+
 ## 0.14.1
 
 ### Patch Changes
