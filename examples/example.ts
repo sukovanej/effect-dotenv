@@ -6,7 +6,7 @@ const exampleConfig = Config.all({
 });
 
 const program = pipe(
-  Effect.config(exampleConfig),
+  exampleConfig,
   Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
   Effect.provide(DotEnv.setConfigProvider()),
 );

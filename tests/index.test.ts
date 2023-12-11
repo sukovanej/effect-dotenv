@@ -9,10 +9,7 @@ const exampleConfig = Config.all({
 });
 
 const readExampleConfig = (envFilePath: string) =>
-  pipe(
-    Effect.config(exampleConfig),
-    Effect.provide(DotEnv.setConfigProvider(envFilePath)),
-  );
+  pipe(exampleConfig, Effect.provide(DotEnv.setConfigProvider(envFilePath)));
 
 test("Load from env file", async () => {
   const program = withTmpDotEnvFile(
@@ -67,7 +64,7 @@ test("Process env has precedence over dotenv", async () => {
 
 test("Dotnet config provider fails if no .env file is found", async () => {
   const program = pipe(
-    Effect.config(exampleConfig),
+    exampleConfig,
     Effect.provide(
       pipe(
         DotEnv.makeConfigProvider(".non-existing-env-file"),
