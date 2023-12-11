@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.15.0
+
+### Minor Changes
+
+- d73677a: Update effect.
+
 ## 0.14.2
 
 ### Patch Changes
