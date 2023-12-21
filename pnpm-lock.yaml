@@ -29,8 +29,8 @@ devDependencies:
     specifier: ^1.0.4
     version: 1.0.4(vitest@1.0.4)
   effect:
-    specifier: 2.0.0-next.61
-    version: 2.0.0-next.61
+    specifier: 2.0.0-next.62
+    version: 2.0.0-next.62
   eslint:
     specifier: ^8.56.0
     version: 8.56.0
@@ -1724,8 +1724,8 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /effect@2.0.0-next.61:
-    resolution: {integrity: sha512-BuRr9SEwYdMVLQunATRjm3MAkTgWI21Tyn5ooWVZnTeXj0lUqSV0fjaqNFksEymssmwJ1ucogbuYQ/3RLmwxgA==}
+  /effect@2.0.0-next.62:
+    resolution: {integrity: sha512-fJhLzf5oouL4WZP314ZJgZz5Bel7OHTY+YFxO06sW1mSvqJz0s28y7jDHr5zhtTNM1YRvzbeLYUYfNaJYKqx1A==}
     dev: true
 
   /emoji-regex@8.0.0:
