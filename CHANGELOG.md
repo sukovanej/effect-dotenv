@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.15.2
+
+### Patch Changes
+
+- 7abd078: Update effect.
+
 ## 0.15.1
 
 ### Patch Changes
