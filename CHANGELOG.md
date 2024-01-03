@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.16.0
+
+### Minor Changes
+
+- 3dce7bb: Update effect.
+
 ## 0.15.2
 
 ### Patch Changes
