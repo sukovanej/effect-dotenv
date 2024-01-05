@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.16.1
+
+### Patch Changes
+
+- 8b4f0e5: Expand variables.
+
 ## 0.16.0
 
 ### Minor Changes
