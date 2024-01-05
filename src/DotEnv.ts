@@ -10,6 +10,7 @@ import {
   ReadonlyArray,
   pipe,
 } from "effect";
+import { expand } from "effect-dotenv/expand";
 import fs from "fs";
 import { promisify } from "util";
 
@@ -60,7 +61,7 @@ export const makeConfigProvider = (paths?: string | readonly string[]) => {
     ),
     Effect.flatMap(([buffer, path]) =>
       pipe(
-        Effect.sync(() => dotenv.parse(buffer.toString("utf8"))),
+        Effect.sync(() => expand(dotenv.parse(buffer.toString("utf8")))),
         Effect.map((env) => [env, path] as const),
       ),
     ),

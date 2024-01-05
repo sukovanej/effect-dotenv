@@ -22,6 +22,17 @@ test("Load from env file", async () => {
   expect(result).toEqual({ value: "hello", number: 69 });
 });
 
+test("Expand variables", async () => {
+  const program = withTmpDotEnvFile(
+    "VALUE=hello-${NUMBER}\nNUMBER=69",
+    readExampleConfig,
+  );
+
+  const result = await Effect.runPromise(program);
+
+  expect(result).toEqual({ value: "hello-69", number: 69 });
+});
+
 test("Load from process env if the env file doesn't exist", async () => {
   const program = pipe(
     Effect.all([modifyEnv("VALUE", "hello"), modifyEnv("NUMBER", "69")]),
