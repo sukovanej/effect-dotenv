@@ -46,11 +46,11 @@
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/node": "^20.11.5",
+    "@types/node": "^20.11.6",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "@vitest/coverage-v8": "^1.2.1",
-    "effect": "2.2.0",
+    "effect": "2.2.2",
     "eslint": "^8.56.0",
     "prettier": "^3.2.4",
     "tsup": "^8.0.1",
@@ -59,7 +59,7 @@
     "vitest": "^1.2.1"
   },
   "dependencies": {
-    "dotenv": "^16.3.2"
+    "dotenv": "^16.4.1"
   },
   "peerDependencies": {
     "effect": "^2.2.0"
