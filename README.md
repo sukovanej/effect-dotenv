@@ -22,6 +22,7 @@ The input parameters can be
 - _list of strings_ - it will use the first existing .env file from the list
 
 ```ts
+import { NodeContext } from "@effect/platform-node"
 import { Config, Effect, pipe } from "effect";
 import { DotEnv } from "effect-dotenv";
 
@@ -33,6 +34,7 @@ const program = pipe(
   Effect.config(exampleConfig),
   Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
   Effect.provide(DotEnv.setConfigProvider()),
+  Effect.provide(NodeContext.layer)
 );
 
 Effect.runPromise(program);
@@ -45,6 +47,7 @@ from `.env` file. The `program` effect will fail with `NoAvailableDotEnvFileErro
 error if the `.env` file doesn't exist.
 
 ```ts
+import { NodeContext } from "@effect/platform-node"
 import { Config, Effect, Layer, pipe } from "effect";
 import { DotEnv } from "effect-dotenv";
 
@@ -62,6 +65,7 @@ const program = pipe(
       Layer.unwrapEffect,
     ),
   ),
+  Effect.provide(NodeContext.layer)
 );
 
 Effect.runPromise(program);
