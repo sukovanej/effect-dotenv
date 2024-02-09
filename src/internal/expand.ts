@@ -1,22 +1,22 @@
 // Taken from https://github.com/motdotla/dotenv-expand/blob/master/lib/main.js
-import * as dotenv from "dotenv";
+import type * as dotenv from "dotenv"
 
 function _searchLast(str: string, rgx: RegExp) {
-  const matches = Array.from(str.matchAll(rgx));
-  return matches.length > 0 ? matches.slice(-1)[0].index : -1;
+  const matches = Array.from(str.matchAll(rgx))
+  return matches.length > 0 ? matches.slice(-1)[0].index : -1
 }
 
 function _interpolate(envValue: string, parsed: dotenv.DotenvParseOutput) {
   // find the last unescaped dollar sign in the
   // value so that we can evaluate it
-  const lastUnescapedDollarSignIndex = _searchLast(envValue, /(?!(?<=\\))\$/g);
+  const lastUnescapedDollarSignIndex = _searchLast(envValue, /(?!(?<=\\))\$/g)
 
   // If we couldn't match any unescaped dollar sign
   // let's return the string as is
-  if (lastUnescapedDollarSignIndex === -1) return envValue;
+  if (lastUnescapedDollarSignIndex === -1) return envValue
 
   // This is the right-most group of variables in the string
-  const rightMostGroup = envValue.slice(lastUnescapedDollarSignIndex);
+  const rightMostGroup = envValue.slice(lastUnescapedDollarSignIndex)
 
   /**
    * This finds the inner most variable/group divided
@@ -29,33 +29,33 @@ function _interpolate(envValue: string, parsed: dotenv.DotenvParseOutput) {
    *   }?                   // optional closing curly brace
    * )
    */
-  const matchGroup = /((?!(?<=\\))\${?([\w]+)(?::-([^}\\]*))?}?)/;
-  const match = rightMostGroup.match(matchGroup);
+  const matchGroup = /((?!(?<=\\))\${?([\w]+)(?::-([^}\\]*))?}?)/
+  const match = rightMostGroup.match(matchGroup)
 
-  if (match != null) {
-    const [, group, variableName, defaultValue] = match;
+  if (match !== null) {
+    const [, group, variableName, defaultValue] = match
 
     return _interpolate(
       envValue.replace(group, defaultValue || parsed[variableName] || ""),
-      parsed,
-    );
+      parsed
+    )
   }
 
-  return envValue;
+  return envValue
 }
 
 function _resolveEscapeSequences(value: string) {
-  return value.replace(/\\\$/g, "$");
+  return value.replace(/\\\$/g, "$")
 }
 
 export function expand(parsed: dotenv.DotenvParseOutput) {
-  const newParsed: dotenv.DotenvParseOutput = {};
+  const newParsed: dotenv.DotenvParseOutput = {}
 
   for (const configKey in parsed) {
     newParsed[configKey] = _resolveEscapeSequences(
-      _interpolate(parsed[configKey], parsed),
-    );
+      _interpolate(parsed[configKey], parsed)
+    )
   }
 
-  return newParsed;
+  return newParsed
 }

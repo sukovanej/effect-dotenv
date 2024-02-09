@@ -1,9 +1,10 @@
-import { Config, Effect, Layer, pipe } from "effect";
-import { DotEnv } from "effect-dotenv";
+import { NodeContext } from "@effect/platform-node"
+import { Config, Effect, Layer, pipe } from "effect"
+import { DotEnv } from "effect-dotenv"
 
 const exampleConfig = Config.all({
-  value: Config.string("VALUE"),
-});
+  value: Config.string("VALUE")
+})
 
 const program = pipe(
   exampleConfig,
@@ -12,9 +13,10 @@ const program = pipe(
     pipe(
       DotEnv.makeConfigProvider(".env"),
       Effect.map(Layer.setConfigProvider),
-      Layer.unwrapEffect,
-    ),
+      Layer.unwrapEffect
+    )
   ),
-);
+  Effect.provide(NodeContext.layer)
+)
 
-Effect.runPromise(program);
+Effect.runPromise(program)

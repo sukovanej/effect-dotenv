@@ -1,14 +1,16 @@
-import { Config, Effect, pipe } from "effect";
-import { DotEnv } from "effect-dotenv";
+import { NodeContext } from "@effect/platform-node"
+import { Config, Effect, pipe } from "effect"
+import { DotEnv } from "effect-dotenv"
 
 const exampleConfig = Config.all({
-  value: Config.string("VALUE"),
-});
+  value: Config.string("VALUE")
+})
 
 const program = pipe(
   exampleConfig,
   Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
   Effect.provide(DotEnv.setConfigProvider()),
-);
+  Effect.provide(NodeContext.layer)
+)
 
-Effect.runPromise(program);
+Effect.runPromise(program)

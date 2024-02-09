@@ -1,4 +1,11 @@
-import * as dotenv from "dotenv";
+/**
+ * dotenv ConfigProvider
+ *
+ * @since 1.0.0
+ */
+import * as FileSystem from "@effect/platform/FileSystem"
+import * as dotenv from "dotenv"
+import type { Cause } from "effect"
 import {
   ConfigProvider,
   Context,
@@ -7,28 +14,41 @@ import {
   Effect,
   FiberRef,
   Layer,
-  ReadonlyArray,
+  Match,
   pipe,
-} from "effect";
-import { expand } from "effect-dotenv/expand";
-import fs from "fs";
-import { promisify } from "util";
+  ReadonlyArray
+} from "effect"
+import { expand } from "./internal/expand.js"
 
 /**
  * @category errors
  * @since 1.0.0
  */
-export class NoAvailableDotEnvFileError extends Data.TaggedError(
-  "NoAvailableDotEnvFileError",
-)<{ files: readonly string[]; error: unknown }> {}
+export interface NoAvailableDotEnvFileError extends Cause.YieldableError {
+  _tag: "NoAvailableDotEnvFileError"
+  files: ReadonlyArray<string>
+  error: unknown
+}
+
+class NoAvailableDotEnvFileErrorImpl extends Data.TaggedError(
+  "NoAvailableDotEnvFileError"
+)<{ files: ReadonlyArray<string>; error: unknown }> implements NoAvailableDotEnvFileError {}
 
 /** @internal */
 const currentConfigProvider = pipe(
   FiberRef.get(DefaultServices.currentServices),
-  Effect.map((services) =>
-    Context.get(services, ConfigProvider.ConfigProvider),
-  ),
-);
+  Effect.map((services) => Context.get(services, ConfigProvider.ConfigProvider))
+)
+
+/** @internal */
+const pathFromInput = pipe(
+  Match.type<string | ReadonlyArray<string> | undefined>(),
+  Match.when(Match.undefined, () => ReadonlyArray.of(".env")),
+  Match.when(Match.string, (path) => ReadonlyArray.of(path)),
+  Match.orElse((paths) => paths)
+)
+
+const { readFileString } = Effect.serviceFunctions(FileSystem.FileSystem)
 
 /**
  * Create a dotenv config provider.
@@ -40,36 +60,25 @@ const currentConfigProvider = pipe(
  * @category constructors
  * @since 1.0.0
  */
-export const makeConfigProvider = (paths?: string | readonly string[]) => {
-  const files =
-    typeof paths === "string"
-      ? [paths]
-      : paths === undefined
-        ? [".env"]
-        : paths;
+export const makeConfigProvider: (
+  paths?: string | ReadonlyArray<string>
+) => Effect.Effect<
+  ConfigProvider.ConfigProvider,
+  NoAvailableDotEnvFileError,
+  FileSystem.FileSystem
+> = (paths) => {
+  const files = pathFromInput(paths)
 
   return pipe(
-    ReadonlyArray.map(files, (path) =>
-      Effect.all([
-        Effect.tryPromise(() => promisify(fs.readFile)(path)),
-        Effect.succeed(path),
-      ]),
-    ),
+    ReadonlyArray.map(files, (path) => readFileString(path)),
     Effect.firstSuccessOf,
     Effect.mapError(
-      (error) => new NoAvailableDotEnvFileError({ files, error }),
+      (error) => new NoAvailableDotEnvFileErrorImpl({ files, error })
     ),
-    Effect.flatMap(([buffer, path]) =>
-      pipe(
-        Effect.sync(() => expand(dotenv.parse(buffer.toString("utf8")))),
-        Effect.map((env) => [env, path] as const),
-      ),
-    ),
-    Effect.map(([object]) =>
-      ConfigProvider.fromMap(new Map(Object.entries(object))),
-    ),
-  );
-};
+    Effect.flatMap((content) => Effect.sync(() => expand(dotenv.parse(content)))),
+    Effect.map(ConfigProvider.fromJson)
+  )
+}
 
 /**
  * Create a layer that sets the ConfigProvider to dotenv config provider
@@ -85,16 +94,20 @@ export const makeConfigProvider = (paths?: string | readonly string[]) => {
  * @category constructors
  * @since 1.0.0
  */
-export const setConfigProvider = (paths?: string | readonly string[]) =>
+export const setConfigProvider: (paths?: string | ReadonlyArray<string>) => Layer.Layer<
+  never,
+  never,
+  FileSystem.FileSystem
+> = (paths) =>
   pipe(
     makeConfigProvider(paths),
     Effect.flatMap((dotEnvConfigProvider) =>
       pipe(
         currentConfigProvider,
-        Effect.map(ConfigProvider.orElse(() => dotEnvConfigProvider)),
-      ),
+        Effect.map(ConfigProvider.orElse(() => dotEnvConfigProvider))
+      )
     ),
     Effect.catchTag("NoAvailableDotEnvFileError", () => currentConfigProvider),
     Effect.map(Layer.setConfigProvider),
-    Layer.unwrapEffect,
-  );
+    Layer.unwrapEffect
+  )
