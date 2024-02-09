@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.0
+
+### Minor Changes
+
+- 17fcc00: Minor effect update. Align setup with the effect ecosystem.
+
 ## 0.16.3
 
 ### Patch Changes
