@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.2
+
+### Patch Changes
+
+- cc20389: Update effect.
+
 ## 0.17.1
 
 ### Patch Changes
