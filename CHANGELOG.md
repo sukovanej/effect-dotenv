@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.3
+
+### Patch Changes
+
+- 87b48b3: Update @effect/platform.
+
 ## 0.17.2
 
 ### Patch Changes
