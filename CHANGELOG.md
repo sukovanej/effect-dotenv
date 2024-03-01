@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.4
+
+### Patch Changes
+
+- de91ab4: Update effect packages.
+
 ## 0.17.3
 
 ### Patch Changes
