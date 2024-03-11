@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.5
+
+### Patch Changes
+
+- 40f9f2f: Update effect dependencies.
+
 ## 0.17.4
 
 ### Patch Changes
