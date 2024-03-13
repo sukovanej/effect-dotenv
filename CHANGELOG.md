@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.6
+
+### Patch Changes
+
+- 0189dfc: Update effect.
+
 ## 0.17.5
 
 ### Patch Changes
