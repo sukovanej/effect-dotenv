@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.8
+
+### Patch Changes
+
+- 5d4cbdd: Update effect.
+
 ## 0.17.7
 
 ### Patch Changes
