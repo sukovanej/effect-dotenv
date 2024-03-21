@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.11
+
+### Patch Changes
+
+- d094270: Update effect packages.
+
 ## 0.17.10
 
 ### Patch Changes
