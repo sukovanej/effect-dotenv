@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.12
+
+### Patch Changes
+
+- e5f7396: Update effect.
+
 ## 0.17.11
 
 ### Patch Changes
