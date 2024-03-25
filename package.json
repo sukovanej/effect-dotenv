@@ -45,14 +45,14 @@
     "@effect/docgen": "^0.4.0",
     "@effect/eslint-plugin": "^0.1.2",
     "@effect/language-service": "^0.1.0",
-    "@effect/platform": "^0.48.15",
-    "@effect/platform-node": "^0.45.17",
+    "@effect/platform": "^0.48.17",
+    "@effect/platform-node": "^0.45.19",
     "@types/node": "^20.11.30",
     "@typescript-eslint/eslint-plugin": "^7.3.1",
     "@typescript-eslint/parser": "^7.3.1",
     "@vitest/coverage-v8": "^1.4.0",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
-    "effect": "2.4.11",
+    "effect": "2.4.13",
     "eslint": "^8.57.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-codegen": "0.28.0",
@@ -71,7 +71,7 @@
     "dotenv": "^16.4.5"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.15",
-    "effect": "^2.4.11"
+    "@effect/platform": "^0.48.17",
+    "effect": "^2.4.13"
   }
 }
