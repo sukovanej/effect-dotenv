@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.14
+
+### Patch Changes
+
+- 3d531d6: Update effect.
+
 ## 0.17.13
 
 ### Patch Changes
