@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.3",
+    "@babel/core": "^7.24.4",
     "@babel/plugin-transform-export-namespace-from": "^7.24.1",
     "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@changesets/cli": "^2.27.1",
@@ -45,14 +45,14 @@
     "@effect/docgen": "^0.4.0",
     "@effect/eslint-plugin": "^0.1.2",
     "@effect/language-service": "^0.1.0",
-    "@effect/platform": "^0.48.22",
-    "@effect/platform-node": "^0.45.24",
-    "@types/node": "^20.12.2",
+    "@effect/platform": "^0.48.24",
+    "@effect/platform-node": "^0.45.26",
+    "@types/node": "^20.12.4",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
     "@vitest/coverage-v8": "^1.4.0",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
-    "effect": "2.4.15",
+    "effect": "2.4.17",
     "eslint": "^8.57.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-codegen": "0.28.0",
@@ -63,7 +63,7 @@
     "madge": "^6.1.0",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.5",
-    "tsx": "^4.7.1",
+    "tsx": "^4.7.2",
     "typescript": "^5.4.3",
     "vitest": "^1.4.0"
   },
@@ -71,7 +71,7 @@
     "dotenv": "^16.4.5"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.22",
-    "effect": "^2.4.15"
+    "@effect/platform": "^0.48.24",
+    "effect": "^2.4.17"
   }
 }
