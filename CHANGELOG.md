@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.18
+
+### Patch Changes
+
+- 66abd2a: Update effect.
+
 ## 0.17.17
 
 ### Patch Changes
