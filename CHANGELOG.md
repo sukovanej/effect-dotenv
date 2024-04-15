@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.17.20
+
+### Patch Changes
+
+- 130fa51: Update @effect/platform.
+
 ## 0.17.19
 
 ### Patch Changes
