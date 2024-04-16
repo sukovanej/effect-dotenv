@@ -6,18 +6,16 @@
 import * as FileSystem from "@effect/platform/FileSystem"
 import * as dotenv from "dotenv"
 import type { Cause } from "effect"
-import {
-  ConfigProvider,
-  Context,
-  Data,
-  DefaultServices,
-  Effect,
-  FiberRef,
-  Layer,
-  Match,
-  pipe,
-  ReadonlyArray
-} from "effect"
+import * as Array from "effect/Array"
+import * as ConfigProvider from "effect/ConfigProvider"
+import * as Context from "effect/Context"
+import * as Data from "effect/Data"
+import * as DefaultServices from "effect/DefaultServices"
+import * as Effect from "effect/Effect"
+import * as FiberRef from "effect/FiberRef"
+import { pipe } from "effect/Function"
+import * as Layer from "effect/Layer"
+import * as Match from "effect/Match"
 import { expand } from "./internal/expand.js"
 
 /**
@@ -43,8 +41,8 @@ const currentConfigProvider = pipe(
 /** @internal */
 const pathFromInput = pipe(
   Match.type<string | ReadonlyArray<string> | undefined>(),
-  Match.when(Match.undefined, () => ReadonlyArray.of(".env")),
-  Match.when(Match.string, (path) => ReadonlyArray.of(path)),
+  Match.when(Match.undefined, () => Array.of(".env")),
+  Match.when(Match.string, (path) => Array.of(path)),
   Match.orElse((paths) => paths)
 )
 
@@ -70,7 +68,7 @@ export const makeConfigProvider: (
   const files = pathFromInput(paths)
 
   return pipe(
-    ReadonlyArray.map(files, (path) => readFileString(path)),
+    Array.map(files, (path) => readFileString(path)),
     Effect.firstSuccessOf,
     Effect.mapError(
       (error) => new NoAvailableDotEnvFileErrorImpl({ files, error })
