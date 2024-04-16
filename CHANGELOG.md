@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.18.0
+
+### Minor Changes
+
+- c7a04ed: Update to effect 3.0.
+
 ## 0.17.20
 
 ### Patch Changes
