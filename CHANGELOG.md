@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.18.1
+
+### Patch Changes
+
+- 5381336: Update @effect/platform.
+
 ## 0.18.0
 
 ### Minor Changes
