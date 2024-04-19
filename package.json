@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/sukovanej/effect-dotenv/issues"
   },
-  "packageManager": "pnpm@8.15.4",
+  "packageManager": "pnpm@9.0.4",
   "publishConfig": {
     "access": "public",
     "directory": "dist"
@@ -45,8 +45,8 @@
     "@effect/docgen": "^0.4.3",
     "@effect/eslint-plugin": "^0.1.2",
     "@effect/language-service": "^0.1.0",
-    "@effect/platform": "^0.50.0",
-    "@effect/platform-node": "^0.47.0",
+    "@effect/platform": "^0.50.1",
+    "@effect/platform-node": "^0.47.1",
     "@types/node": "^20.12.7",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
@@ -73,5 +73,12 @@
   "peerDependencies": {
     "@effect/platform": "^0.50.0",
     "effect": "^3.0.0"
+  },
+  "pnpm": {
+    "updateConfig": {
+      "ignoreDependencies": [
+        "eslint"
+      ]
+    }
   }
 }
