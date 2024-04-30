@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "sukovanej/effect-log" }],
+  "changelog": ["@changesets/changelog-github", { "repo": "sukovanej/effect-dotenv" }],
   "commit": false,
   "fixed": [],
   "linked": [],
