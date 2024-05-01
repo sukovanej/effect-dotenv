@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.18.3
+
+### Patch Changes
+
+- [`7717131`](https://github.com/sukovanej/effect-dotenv/commit/771713182b3ea5d3e94fa3d677a01f0c0cbae5b7) Thanks [@sukovanej](https://github.com/sukovanej)! - Update @effect/platform.
+
 ## 0.18.2
 
 ### Patch Changes
