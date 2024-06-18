@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.19.0
+
+### Minor Changes
+
+- [`9c7ffaa`](https://github.com/sukovanej/effect-dotenv/commit/9c7ffaaccb26d421184def5b8551d50e07faa1e9) Thanks [@sukovanej](https://github.com/sukovanej)! - Update @effect/platform.
+
 ## 0.18.7
 
 ### Patch Changes
