@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",
-    "@babel/core": "^7.24.8",
+    "@babel/core": "^7.24.9",
     "@babel/plugin-transform-export-namespace-from": "^7.24.7",
     "@babel/plugin-transform-modules-commonjs": "^7.24.8",
     "@changesets/changelog-github": "^0.5.0",
@@ -46,15 +46,15 @@
     "@effect/docgen": "^0.4.3",
     "@effect/eslint-plugin": "^0.1.2",
     "@effect/language-service": "^0.1.0",
-    "@effect/platform": "^0.58.27",
-    "@effect/platform-node": "^0.53.26",
+    "@effect/platform": "^0.59.0",
+    "@effect/platform-node": "^0.54.1",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^20.14.10",
-    "@typescript-eslint/eslint-plugin": "^7.16.0",
-    "@typescript-eslint/parser": "^7.16.0",
-    "@vitest/coverage-v8": "^2.0.2",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
+    "@vitest/coverage-v8": "^2.0.3",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
-    "effect": "3.5.3",
+    "effect": "3.5.4",
     "eslint": "^8.57.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-codegen": "0.28.0",
@@ -67,13 +67,13 @@
     "rimraf": "^6.0.1",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3",
-    "vitest": "^2.0.2"
+    "vitest": "^2.0.3"
   },
   "dependencies": {
     "dotenv": "^16.4.5"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.58.0",
+    "@effect/platform": "^0.59.0",
     "effect": "^3.5.0"
   },
   "pnpm": {
