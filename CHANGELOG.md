@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.21.0
+
+### Minor Changes
+
+- [`4a37da2`](https://github.com/sukovanej/effect-dotenv/commit/4a37da2073c5be327b39152271688a00d9b74eed) Thanks [@sukovanej](https://github.com/sukovanej)! - Update effect.
+
 ## 0.20.3
 
 ### Patch Changes
