@@ -1,72 +1,42 @@
 # effect-dotenv
 
-[dotenv](https://github.com/motdotla/dotenv) [ConfigProvider](https://effect-ts.github.io/io/modules/ConfigProvider.ts.html) implementation for [Effect-TS](https://github.com/Effect-TS)
+[dotenv](https://github.com/motdotla/dotenv) + [dotenv-expand](https://github.com/motdotla/dotenv-expand)
+as a [ConfigProvider](https://effect-ts.github.io/effect/effect/ConfigProvider.ts.html) implementation for [Effect-TS](https://github.com/Effect-TS/effect)
+
+## Installation
 
 ```
 pnpm add effect-dotenv
 ```
 
-## Using `setConfigProvider` layer
+## Usage
 
-`setDotEnvConfigProvider` creates a layer that will attempt to load
-the .env file. If the .env file doesn't exist, it will use the current
-`ConfigProvider` instead. If a .env is found, the derived `ConfigProvider`
-will be used as a fallback of the current `ConfigProvider`. This results
-in the standard behaviour where environment variable is used if set,
-otherwise it attempts to load it from the .env file.
-
-The input parameters can be
-
-- _ommited completely_ - `.env` file is used by default
-- _a string_ - it will attempt to load a file on the given path
-- _list of strings_ - it will use the first existing .env file from the list
+Use `DotEnv.layer(<filename>)` to replace the current ConfigProvider with a .env one.
 
 ```ts
-import { NodeContext } from "@effect/platform-node"
-import { Config, Effect, pipe } from "effect";
+import { Config, Effect } from "effect";
 import { DotEnv } from "effect-dotenv";
 
-const exampleConfig = Config.all({
-  value: Config.string("VALUE"),
-});
+import { NodeContext } from "@effect/platform-node";
 
-const program = pipe(
-  Effect.config(exampleConfig),
-  Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
-  Effect.provide(DotEnv.setConfigProvider()),
-  Effect.provide(NodeContext.layer)
+const program = Effect.gen(function* () {
+  const config = yield* Config.all({
+    value: Config.string("VALUE"),
+  });
+  yield* Effect.log(`value = ${config.value}`);
+}).pipe(
+  Effect.provide(DotEnv.layer(".env")),
+  Effect.provide(NodeContext.layer),
 );
 
 Effect.runPromise(program);
 ```
 
-## Using `makeConfigProvider` effect
+Alternatively, you can employ the `DotEnv.layerAsFallback` which sets a ConfigProvider
+that uses the .env as a fallback. It attemps to resolve the given config from the
+`process.env` (assuming the current config provider is the default one) and if not found
+it tries the .env.
 
-The example below configures config provider that will read the config
-from `.env` file. The `program` effect will fail with `NoAvailableDotEnvFileError`
-error if the `.env` file doesn't exist.
-
-```ts
-import { NodeContext } from "@effect/platform-node"
-import { Config, Effect, Layer, pipe } from "effect";
-import { DotEnv } from "effect-dotenv";
-
-const exampleConfig = Config.all({
-  value: Config.string("VALUE"),
-});
-
-const program = pipe(
-  Effect.config(exampleConfig),
-  Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
-  Effect.provide(
-    pipe(
-      DotEnv.makeConfigProvider(".env"),
-      Effect.map(Layer.setConfigProvider),
-      Layer.unwrapEffect,
-    ),
-  ),
-  Effect.provide(NodeContext.layer)
-);
-
-Effect.runPromise(program);
-```
+In case you need a more customized setup, use the `DotEnv.makeConfigProvider` which produces
+an effect constructing the .env ConfigProvider. You'll probably want to use it along with
+the `Layer.setConfigProvider` combinator from `effect`.
