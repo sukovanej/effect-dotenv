@@ -1,99 +1,102 @@
+import { FileSystem, Path } from "@effect/platform"
 import { NodeContext } from "@effect/platform-node"
-import { Config, Effect, Either, Layer, pipe } from "effect"
+import { expect, it } from "@effect/vitest"
+import { Config, Effect, Either } from "effect"
 import { DotEnv } from "effect-dotenv"
-import { expect, test } from "vitest"
 
-import { modifyEnv, runWithTestDotEnv } from "./utils.js"
-
-const exampleConfig = Config.all({
+const ExampleConfig = Config.all({
   value: Config.string("VALUE"),
   number: Config.number("NUMBER")
 })
 
-const readExampleConfig = (envFilePath: string) =>
-  pipe(
-    exampleConfig,
-    Effect.provide(DotEnv.setConfigProvider(envFilePath)),
-    Effect.provide(NodeContext.layer)
-  )
-
-test("Load from env file", async () => {
-  const program = runWithTestDotEnv(
-    "VALUE=hello\nNUMBER=69",
-    exampleConfig
-  )
-
-  const result = await Effect.runPromise(program)
-
-  expect(result).toEqual({ value: "hello", number: 69 })
-})
-
-// TODO - fails in Bun
-test.skip("Expand variables", async () => {
-  const program = runWithTestDotEnv(
-    "VALUE=hello-${NUMBER}\nNUMBER=69",
-    exampleConfig
-  )
-
-  const result = await Effect.runPromise(program)
-
-  expect(result).toEqual({ value: "hello-69", number: 69 })
-})
-
-test("Load from process env if the env file doesn't exist", async () => {
-  const program = pipe(
-    Effect.all([modifyEnv("VALUE", "hello"), modifyEnv("NUMBER", "69")]),
-    Effect.flatMap(() => readExampleConfig(".env")),
-    Effect.scoped
-  )
-
-  const result = await Effect.runPromise(program)
-
-  expect(result).toEqual({ value: "hello", number: 69 })
-})
-
-test("Load from both process env and dotenv file", async () => {
-  const program = pipe(
-    modifyEnv("VALUE", "hello"),
-    Effect.andThen(runWithTestDotEnv("NUMBER=69", exampleConfig)),
-    Effect.scoped
-  )
-
-  const result = await Effect.runPromise(program)
-
-  expect(result).toEqual({ value: "hello", number: 69 })
-})
-
-test("Process env has precedence over dotenv", async () => {
-  const program = pipe(
-    modifyEnv("VALUE", "hello"),
-    Effect.andThen(runWithTestDotEnv("NUMBER=69\nVALUE=another", exampleConfig)),
-    Effect.scoped
-  )
-
-  const result = await Effect.runPromise(program)
-
-  expect(result).toEqual({ value: "hello", number: 69 })
-})
-
-test("Dotnet config provider fails if no .env file is found", async () => {
-  const program = pipe(
-    exampleConfig,
-    Effect.provide(
-      pipe(
-        DotEnv.makeConfigProvider(".non-existing-env-file"),
-        Effect.map(Layer.setConfigProvider),
-        Layer.unwrapEffect
-      )
+it.scopedLive.each([
+  {
+    name: "Simple variables",
+    config: ExampleConfig,
+    content: "VALUE=hello\nNUMBER=69",
+    expected: { value: "hello", number: 69 }
+  },
+  {
+    name: "Whitespaces",
+    config: ExampleConfig,
+    content: "VALUE= hello  \n NUMBER= 69 \n\n",
+    expected: { value: "hello", number: 69 }
+  },
+  {
+    name: "Quotes",
+    config: Config.all({
+      value: Config.string("VALUE"),
+      anotherValue: Config.string("ANOTHER_VALUE")
+    }),
+    content: "VALUE=\" hello  \"\nANOTHER_VALUE=' another   '",
+    expected: { value: " hello  ", anotherValue: " another   " }
+  },
+  {
+    name: "Expand",
+    config: ExampleConfig,
+    content: "VALUE=hello-${NUMBER}\nNUMBER=69",
+    expected: { value: "hello-69", number: 69 }
+  }
+])("Dot env parsing ($name)", ({ config, content, expected }) =>
+  Effect.gen(function*(_) {
+    const envFile = yield* createTmpEnvFile(content)
+    const result = yield* (config as Config.Config<unknown>).pipe(
+      Effect.provide(DotEnv.layer(envFile))
     )
-  )
+    expect(result).toEqual(expected)
+  }).pipe(Effect.provide(NodeContext.layer)))
 
-  const result = await Effect.runPromise(Effect.either(program).pipe(Effect.provide(NodeContext.layer)))
-  expect(Either.isLeft(result)).toBe(true)
+it.scopedLive("Load from both process env and dotenv file", () =>
+  Effect.gen(function*(_) {
+    yield* modifyEnv("VALUE", "hello")
+    const envFile = yield* createTmpEnvFile("NUMBER=69")
+    const result = yield* ExampleConfig.pipe(
+      Effect.provide(DotEnv.layerAsFallback(envFile))
+    )
+    expect(result).toEqual({ value: "hello", number: 69 })
+  }).pipe(Effect.provide(NodeContext.layer)))
 
-  const resultError = (
-    result as Either.Left<DotEnv.NoAvailableDotEnvFileError, never>
-  ).left
+it.scopedLive("Current ConfigProvider has precedence over dotenv", () =>
+  Effect.gen(function*(_) {
+    yield* modifyEnv("VALUE", "hello")
+    const envFile = yield* createTmpEnvFile("NUMBER=69\nVALUE=another")
+    const result = yield* ExampleConfig.pipe(
+      Effect.provide(DotEnv.layerAsFallback(envFile))
+    )
+    expect(result).toEqual({ value: "hello", number: 69 })
+  }).pipe(Effect.provide(NodeContext.layer)))
 
-  expect(resultError.files).toEqual([".non-existing-env-file"])
-})
+it.scopedLive("Dotnet config provider fails if no .env file is found", () =>
+  Effect.gen(function*(_) {
+    const result = yield* DotEnv.makeConfigProvider(".non-existing-env-file").pipe(Effect.either)
+    expect(Either.isLeft(result)).toBe(true)
+  }).pipe(Effect.provide(NodeContext.layer)))
+
+// utils
+
+const createTmpEnvFile = (data: string) =>
+  Effect.gen(function*(_) {
+    const fs = yield* FileSystem.FileSystem
+    const path = yield* Path.Path
+    const dir = yield* fs.makeTempDirectoryScoped({ prefix: "tmp" })
+    const filename = path.join(dir, ".env")
+    yield* fs.writeFileString(filename, data)
+    return filename
+  })
+
+const modifyEnv = (key: string, value: string) =>
+  Effect.gen(function*(_) {
+    const isInEnv = key in process.env
+    const original = process.env[key]
+    process.env[key] = value
+
+    yield* Effect.addFinalizer(() =>
+      Effect.sync(() => {
+        if (isInEnv) {
+          process.env[key] = original
+        } else {
+          delete process.env[key]
+        }
+      })
+    )
+  })

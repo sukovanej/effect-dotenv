@@ -9,7 +9,7 @@ const exampleConfig = Config.all({
 const program = pipe(
   exampleConfig,
   Effect.flatMap((config) => Effect.log(`value = ${config.value}`)),
-  Effect.provide(DotEnv.setConfigProvider()),
+  Effect.provide(DotEnv.layerAsFallback(".env")),
   Effect.provide(NodeContext.layer)
 )
 
