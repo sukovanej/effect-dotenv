@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.23.0
+
+### Minor Changes
+
+- [#136](https://github.com/sukovanej/effect-dotenv/pull/136) [`c6aa24a`](https://github.com/sukovanej/effect-dotenv/commit/c6aa24a827739ab532fb9a72db395ac6cb74e393) Thanks [@sukovanej](https://github.com/sukovanej)! - Removed the `dotenv` dependency and update the API.
+
 ## 0.22.1
 
 ### Patch Changes
