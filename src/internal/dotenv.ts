@@ -31,7 +31,7 @@ export const layerAsFallback = (path: string): Layer.Layer<never, PlatformError,
     const dotEnvConfigProvider = yield* makeConfigProvider(path).pipe(Effect.orElseSucceed(() => null))
 
     if (!dotEnvConfigProvider) {
-      yield* Effect.logDebug("No .env file found")
+      yield* Effect.logDebug(`File '${path}' file found. Skipping dotenv config provider.`)
       return Layer.empty
     }
 
