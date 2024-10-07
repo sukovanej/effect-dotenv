@@ -1,5 +1,11 @@
 # effect-dotenv
 
+## 0.24.1
+
+### Patch Changes
+
+- [`380fa01`](https://github.com/sukovanej/effect-dotenv/commit/380fa017aef690a65487b41c3d6806754c880b43) Thanks [@sukovanej](https://github.com/sukovanej)! - Improve logging when file not found.
+
 ## 0.24.0
 
 ### Minor Changes
