@@ -1,5 +1,8 @@
 # effect-dotenv
 
+> [!NOTE]  
+> This is now part of the `@effect/platform`'s `PlatformConfigProvider` module.
+
 [dotenv](https://github.com/motdotla/dotenv) + [dotenv-expand](https://github.com/motdotla/dotenv-expand)
 as a [ConfigProvider](https://effect-ts.github.io/effect/effect/ConfigProvider.ts.html) implementation for [Effect-TS](https://github.com/Effect-TS/effect)
 
